@@ -11,7 +11,7 @@ export const loadSalesData = () => {
     const results = [];
     const csvPath = path.join(__dirname, '../../data/sales_data.csv');
     let recordCount = 0;
-    const MAX_RECORDS = 1000000; // Limit to 100k records for performance
+    const MAX_RECORDS = 1000; // Limit to 100k records for performance
 
     // Check if file exists
     if (!fs.existsSync(csvPath)) {
