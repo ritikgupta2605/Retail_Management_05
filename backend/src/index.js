@@ -1,6 +1,13 @@
 import express from 'express';
 import cors from 'cors';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
 import salesRoutes from './routes/salesRoutes.js';
+
+dotenv.config();
+
+// Connect to database
+connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 5000;

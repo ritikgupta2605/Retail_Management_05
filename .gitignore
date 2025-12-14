@@ -34,3 +34,6 @@ Thumbs.db
 coverage/
 
 
+
+# Data
+backend/data/sales_data.csv

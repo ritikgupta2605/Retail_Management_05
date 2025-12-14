@@ -49,59 +49,45 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         pages.push(totalPages);
       }
     }
-
     return pages;
   };
 
-  if (totalPages <= 1) {
-    return null;
-  }
+  if (totalPages <= 1) return null;
 
   return (
-    <div className="pagination">
-      <button
-        className="pagination-btn"
-        onClick={handlePrevious}
-        disabled={currentPage === 1}
-        aria-label="Previous page"
-      >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-        Previous
-      </button>
-
-      <div className="pagination-numbers">
+    <div className="pagination-container">
+      <div className="pagination">
+        <button 
+          className="pagination-btn" 
+          onClick={handlePrevious} 
+          disabled={currentPage === 1}
+        >
+          &lt;
+        </button>
+        
         {getPageNumbers().map((page, index) => (
-          page === '...' ? (
-            <span key={`ellipsis-${index}`} className="pagination-ellipsis">
-              ...
-            </span>
-          ) : (
-            <button
-              key={page}
-              className={`pagination-number ${currentPage === page ? 'active' : ''}`}
-              onClick={() => handlePageClick(page)}
-              aria-label={`Go to page ${page}`}
-              aria-current={currentPage === page ? 'page' : undefined}
-            >
-              {page}
-            </button>
-          )
+          <React.Fragment key={index}>
+            {page === '...' ? (
+              <span className="pagination-dots">...</span>
+            ) : (
+              <button
+                className={`pagination-number ${currentPage === page ? 'active' : ''}`}
+                onClick={() => handlePageClick(page)}
+              >
+                {page}
+              </button>
+            )}
+          </React.Fragment>
         ))}
-      </div>
 
-      <button
-        className="pagination-btn"
-        onClick={handleNext}
-        disabled={currentPage === totalPages}
-        aria-label="Next page"
-      >
-        Next
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </button>
+        <button 
+          className="pagination-btn" 
+          onClick={handleNext} 
+          disabled={currentPage === totalPages}
+        >
+          &gt;
+        </button>
+      </div>
     </div>
   );
 };

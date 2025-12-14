@@ -1,20 +1,6 @@
-import { loadSalesData } from '../services/dataService.js';
-import { 
-  searchSalesData, 
-  filterSalesData, 
-  sortSalesData, 
-  paginateSalesData 
-} from '../services/salesService.js';
+import { getSales } from '../services/salesService.js';
 
-let salesData = [];
-
-// Load data on initialization
-(async () => {
-  salesData = await loadSalesData();
-  console.log(`Loaded ${salesData.length} sales records`);
-})();
-
-export const getSalesData = (req, res) => {
+export const getSalesData = async (req, res) => {
   try {
     const {
       search = '',
@@ -32,15 +18,8 @@ export const getSalesData = (req, res) => {
       pageSize = '10'
     } = req.query;
 
-    let filteredData = [...salesData];
-
-    // Apply search
-    if (search) {
-      filteredData = searchSalesData(filteredData, search);
-    }
-
-    // Apply filters
     const filters = {
+      search,
       customerRegion: customerRegion ? customerRegion.split(',') : [],
       gender: gender ? gender.split(',') : [],
       ageMin: ageMin ? parseInt(ageMin) : null,
@@ -49,33 +28,19 @@ export const getSalesData = (req, res) => {
       tags: tags ? tags.split(',') : [],
       paymentMethod: paymentMethod ? paymentMethod.split(',') : [],
       dateFrom: dateFrom || null,
-      dateTo: dateTo || null
+      dateTo: dateTo || null,
+      sortBy,
+      page: parseInt(page),
+      pageSize: parseInt(pageSize)
     };
 
-    filteredData = filterSalesData(filteredData, filters);
-
-    // Apply sorting
-    if (sortBy) {
-      filteredData = sortSalesData(filteredData, sortBy);
-    }
-
-    // Get total count before pagination
-    const totalRecords = filteredData.length;
-
-    // Apply pagination
-    const pageNum = parseInt(page);
-    const pageSizeNum = parseInt(pageSize);
-    const paginatedData = paginateSalesData(filteredData, pageNum, pageSizeNum);
+    const result = await getSales(filters);
 
     res.json({
       success: true,
-      data: paginatedData.data,
-      pagination: {
-        currentPage: pageNum,
-        pageSize: pageSizeNum,
-        totalRecords,
-        totalPages: paginatedData.totalPages
-      }
+      data: result.data,
+      pagination: result.pagination,
+      metrics: result.metrics
     });
   } catch (error) {
     console.error('Error in getSalesData:', error);
