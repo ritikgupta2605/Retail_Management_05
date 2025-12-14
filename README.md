@@ -37,7 +37,7 @@ Server-side pagination with 10 items per page. Backend calculates page slices an
 
 1. **Clone or download the project**
    ```bash
-  cd TrueState assignment
+   cd truestate
    ```
 
 2. **Install Backend Dependencies**
