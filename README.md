@@ -211,24 +211,4 @@ npm run preview
 - Empty dataset (appropriate messaging)
 - Network errors (error state with retry)
 
-## Browser Support
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
 
-## License
-MIT
-
-## Submission Information
-
-**Candidate**: [Your Name]  
-**Assignment**: TruEstate SDE Intern  
-**Submission Date**: [Date]
-
-### Deliverables
-- ✅ Live Application URL
-- ✅ GitHub Repository (Public)
-- ✅ Complete Documentation
-- ✅ Architecture Document
-- ✅ All Required Features Implemented
